@@ -42,8 +42,11 @@ tree = list(os.walk('.'))
 
 for address, dirs, files in tree:
     for name in files:
+        if name[-4:] != '.txt':
+            continue
         header, *content = readSource(address, name)
 
+        
         if header.find('header:') == 0 or content[0].find('content:') == 0:
             header = header.replace('header:', '', 1).strip()
             content[0] = content[0].replace('content:', '', 1).lstrip()
@@ -61,4 +64,4 @@ for address, dirs, files in tree:
         f.write(HTMLFORM.format(header, contentPtag))
         f.close()
 
-# comment555
+# comment
