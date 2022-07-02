@@ -1,4 +1,5 @@
 from tkinter import *
+from ctypes import windll
 
 CLICKS = 0
 
@@ -15,6 +16,9 @@ def say_hi():
 root = Tk()
 root.title('GUI Py')
 root.geometry('300x250+400+400')
+
+windll.shcore.SetProcessDpiAwareness(1)
+root.tk.call('tk', 'scaling', 2)
 
 btn = Button(text = 'Save',
              activebackground = '#001',
