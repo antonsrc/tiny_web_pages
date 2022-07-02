@@ -59,4 +59,4 @@ for address, dirs, files in tree:
         f = open(str(f_path), 'w', encoding='utf-8')
         f.write(HTMLFORM.format(header, add_tag_p(content)))
         f.close()
-        
+# comm 5
