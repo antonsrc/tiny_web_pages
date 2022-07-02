@@ -1,26 +1,25 @@
 # name: tinywp (tiny web pages)
-# ver: 0.1.220625
+# ver: 0.20220702
 # descr: static site generator on python
 # aurhor: Moshnyakov Anton (anton.source@gmail.com)
 
 import os
 import os.path
 
-def readSource(address_, name_):
+def read_source_dir(address_, name_):
     fileName = os.path.join(address_, name_)
     f = open(str(fileName), 'r', encoding='utf-8')
     pageData = f.readlines()
     f.close()
     return pageData
 
-
-def makeSiteDir(address_):
+def make_site_dir(address_):
     sitePath = address_.replace('source', 'website', 1)
     if not os.path.exists(sitePath):
         os.mkdir(sitePath)
     return sitePath
 
-def pTagConvert(data):
+def add_tag_p(data):
     joinData = ''.join(data)
     tagData = joinData.replace('\n', '</p>\n<p>')
     content = '<p>' + tagData + '</p>'
@@ -42,9 +41,10 @@ tree = list(os.walk('.'))
 
 for address, dirs, files in tree:
     for name in files:
-        if name[-4:] != '.txt':
+        file_name, file_ext = os.path.splitext(name)
+        if file_ext != '.txt':
             continue
-        header, *content = readSource(address, name)
+        header, *content = read_source_dir(address, name)
         
         if header.find('header:') == 0 or content[0].find('content:') == 0:
             header = header.replace('header:', '', 1).strip()
@@ -52,15 +52,11 @@ for address, dirs, files in tree:
         else:
             continue
         
-        siteAddress = makeSiteDir(address)
-        siteName = name.replace('.txt', '.html')
+        site_dir = make_site_dir(address)
+        site_name = file_name + '.html'
 
-        siteFilePath = str(os.path.join(siteAddress, siteName))
-        f = open(str(siteFilePath), 'w', encoding='utf-8')
-
-        contentPtag = pTagConvert(content)
-
-        f.write(HTMLFORM.format(header, contentPtag))
+        f_path = str(os.path.join(site_dir, site_name))
+        f = open(str(f_path), 'w', encoding='utf-8')
+        f.write(HTMLFORM.format(header, add_tag_p(content)))
         f.close()
-
-# comment 5
+        
