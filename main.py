@@ -1,10 +1,9 @@
 # name: tinywp (tiny web pages)
-# ver: 0.20220702
+# ver: 0.20220708
 # descr: static site generator on python
 # aurhor: Moshnyakov Anton (anton.source@gmail.com)
 
 import os
-import os.path
 
 def read_source_dir(address_, name_):
     fileName = os.path.join(address_, name_)
