@@ -1,52 +1,31 @@
 from tkinter import *
+from tkinter import ttk
 from ctypes import windll
 
-from setuptools import Command
-
-CLICKS = 0
-
-def click_button():
-    global CLICKS
-    CLICKS += 1
-    root.title('Clicks {}'.format(CLICKS))
-    buttonText.set('Clicks {}'.format(CLICKS))
-    btn3.config(bg = '#ff0')
-
-def say_hi_and_show_text():
-    print('Hi!')
-    labelText.set('Если допустить, что жизнь человеческая\n'
-                  ' может управляться разумом, – то уничтожится\n'
-                  ' возможность жизни. «Война и мир»')
+def show_text():
+    lbl_title_show_var.set('header: ' + str(entry_title.get()))
 
 root = Tk()
 root.title('GUI Py')
 root.geometry('500x450+400+400')
-
 windll.shcore.SetProcessDpiAwareness(1)
 root.tk.call('tk', 'scaling', 2)
+mainframe = ttk.Frame(root, padding="3 3 3 3")
+mainframe.grid(column=0, row=0, sticky=(N, W, E, S))
+root.columnconfigure(0, weight=1)
+root.rowconfigure(0, weight=1)
 
-btn = Button(text = 'Save',
-             activebackground = '#001',
-             activeforeground = '#f0f',
-             bd = 1,
-             command = click_button)
-btn.pack()
 
-btn2 = Button(text = 'Say Hi in cmd', command = say_hi_and_show_text)
-btn2.pack()
+ttk.Label(mainframe, text='Title:').grid(column=1, row=1, sticky=W)
 
-buttonText = StringVar()
-buttonText.set('Изначальный текст')
-btn3 = Button(textvariable = buttonText, command = click_button)
-btn3.pack(side = RIGHT)
+entry_title = ttk.Entry(mainframe, width=15, textvariable=StringVar())
+entry_title.grid(column=1, row=2, sticky=W)
 
-label1 = Label(text = 'Если искать совершенства,\nто никогда не будешь доволен.\n«Анна Каренина»',
-               fg = '#00f')
-label1.pack()
+lbl_title_show_var = StringVar()
+lbl_title_show_var.set('')
+lbl_title_show = ttk.Label(mainframe, textvariable=lbl_title_show_var)
+lbl_title_show.grid(column=1, row=3, sticky=W)
 
-labelText = StringVar()
-labelText.set('')
-label2 = Label(textvariable = labelText)
-label2.pack()
+ttk.Button(mainframe, text='Show text', command=show_text).grid(column=1, row=4, sticky=W)
 
 root.mainloop()
