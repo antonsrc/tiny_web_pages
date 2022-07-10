@@ -8,6 +8,7 @@ def show_text(*args):
 def clear_all():
     entry_title.delete(0, END)
     lbl_title_show_var.set('header: ')
+    main_text.delete(1.0, END)
 
 root = Tk()
 root.title('GUI Py')
@@ -32,9 +33,16 @@ lbl_title_show_var.set('')
 lbl_title_show = ttk.Label(mainframe, textvariable=lbl_title_show_var)
 lbl_title_show.grid(column=1, row=3, sticky=W)
 
-ttk.Button(mainframe, text='Show text', command=show_text).grid(column=1, row=4, sticky=W)
+main_text = Text(mainframe, width=25, height=10)
+main_text.grid(column=1, row=4, sticky=W)
+scrollbar = ttk.Scrollbar(mainframe, orient=VERTICAL, command=main_text.yview)
+scrollbar.grid(column=2, row=4, sticky=(N,S))
+main_text['yscrollcommand'] = scrollbar.set
+
+
+ttk.Button(mainframe, text='Show text', command=show_text).grid(column=1, row=5, sticky=W)
 root.bind("<Return>", show_text)
 
-ttk.Button(mainframe, text='Clear', command=clear_all).grid(column=1, row=5, sticky=W)
+ttk.Button(mainframe, text='Clear', command=clear_all).grid(column=1, row=6, sticky=W)
 
 root.mainloop()
