@@ -55,5 +55,5 @@ btn_show_text.grid(column=1, row=5, sticky=W)
 
 btn_clear = ttk.Button(mainframe, text='Clear', command=clear_all)
 btn_clear.grid(column=1, row=6, sticky=W)
-# temp
+# temp2
 root.mainloop()
