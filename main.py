@@ -1,9 +1,12 @@
-# name: tinywp (tiny web pages)
-# ver: 0.20220708
-# descr: static site generator on python
-# aurhor: Moshnyakov Anton (anton.source@gmail.com)
+r'''name: tinywp (tiny web pages)
+ver: 0.20220722
+descr: static site generator on python
+aurhor: Moshnyakov Anton (anton.source@gmail.com)
+'''
 
 import os
+import shutil
+import sys
 
 def read_source_dir(address_, name_):
     fileName = os.path.join(address_, name_)
@@ -24,14 +27,24 @@ def add_tag_p(data):
     content = '<p>' + tagData + '</p>'
     return content
 
+for param in sys.argv:
+    if param == '-r':
+        ADDRESS = r'http://antonsrc.github.io/'
+    else:
+        abspath = os.path.abspath('.').replace('\\', '/')
+        ADDRESS = r'file:///' + abspath + r'/website/'
+
 HTMLFORM = '''<!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" charset="utf-8">
     <title>{0}</title>
+    <link rel="stylesheet" type="text/css" href="{1}data/mainpage.css">
 </head>
 <body>
-{1}
+<div class="maintext">
+{2}
+</div>
 </body>
 </html>    
 '''
@@ -56,5 +69,7 @@ for address, dirs, files in tree:
 
         f_path = str(os.path.join(site_dir, site_name))
         f = open(str(f_path), 'w', encoding='utf-8')
-        f.write(HTMLFORM.format(header, add_tag_p(content)))
+        f.write(HTMLFORM.format(header, ADDRESS, add_tag_p(content)))
         f.close()
+
+shutil.copytree('data', r'website/data', dirs_exist_ok=True)
