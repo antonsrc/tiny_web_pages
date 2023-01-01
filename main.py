@@ -1,4 +1,4 @@
-r'''name: tinywp (tiny web pages)
+r'''name: tiny_web_pages
 ver: 0.20220722
 descr: static site generator on python
 aurhor: Moshnyakov Anton (anton.source@gmail.com)
