@@ -1,2 +1,2 @@
-# tinywp - tiny web pages
-Tinywp is static site generator on python.
+# tiny_web_pages
+tiny_web_pages is static site generator on python.
